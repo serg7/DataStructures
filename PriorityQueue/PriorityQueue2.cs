@@ -8,18 +8,18 @@ namespace PriorityQueue
     // ADD ANOTHER REALIZATION WITH yield return
 
 
-    public class PriorityQueue2<E> 
+    public class PriorityQueue2<T> 
     {
-        private Dictionary<PriorityType, List<E>> globalQueue;
+        private Dictionary<PriorityType, List<T>> globalQueue;
 
-        class PQEnumerator2<E> : IEnumerator<E>
+        class PQEnumerator2<T> : IEnumerator<T>
         {
-            public PQEnumerator2(PriorityQueue2<E> q)
+            public PQEnumerator2(PriorityQueue2<T> q)
             {
 
             }
 
-            public E Current
+            public T Current
             {
                 get { throw new System.NotImplementedException(); }
             }
@@ -57,14 +57,14 @@ namespace PriorityQueue
 
         public PriorityQueue2()
         {
-            globalQueue = new Dictionary<PriorityType, List<E>>();
+            globalQueue = new Dictionary<PriorityType, List<T>>();
 
-            globalQueue.Add(PriorityType.Low, new List<E>());
-            globalQueue.Add(PriorityType.Medium, new List<E>());
-            globalQueue.Add(PriorityType.High, new List<E>());
+            globalQueue.Add(PriorityType.Low, new List<T>());
+            globalQueue.Add(PriorityType.Medium, new List<T>());
+            globalQueue.Add(PriorityType.High, new List<T>());
         }
 
-        public void Put(E e, PriorityType p)
+        public void Put(T e, PriorityType p)
         {
             if (p == PriorityType.Low)
             {
@@ -83,9 +83,9 @@ namespace PriorityQueue
             }
         }
 
-        public E Get()
+        public T Get()
         {
-            E result = default(E);
+            T result = default(T);
 
             var listWithHigh = globalQueue[PriorityType.High];
             var listWithMedium = globalQueue[PriorityType.Medium];
@@ -108,7 +108,7 @@ namespace PriorityQueue
             }
             else
             {
-                result = default(E);
+                result = default(T);
             }
 
             return result;

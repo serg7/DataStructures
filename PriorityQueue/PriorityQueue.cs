@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
+
 namespace PriorityQueue
 {
     public enum PriorityType
@@ -11,79 +12,49 @@ namespace PriorityQueue
         High
     }
 
-    // ADD ANOTHER REALIZATION WITH yield return
-
-
     public class PriorityQueue<E> : IEnumerable<E>
     {
-        private Dictionary<PriorityType, List<E>> globalQueue;
-
-        class PQEnumerator<E> : IEnumerator<E>
-        {
-            public PQEnumerator(PriorityQueue<E> q)
-            {
-
-            }
-
-            public E Current
-            {
-                get { throw new System.NotImplementedException(); }
-            }
-
-            public void Dispose()
-            {
-                throw new System.NotImplementedException();
-            }
-
-            object IEnumerator.Current
-            {
-                get { throw new System.NotImplementedException(); }
-            }
-
-            public bool MoveNext()
-            {
-                throw new System.NotImplementedException();
-            }
-
-            public void Reset()
-            {
-                throw new System.NotImplementedException();
-            }
-        }
+        private Dictionary<PriorityType, List<E>> GlobalQueue;
+        private List<E> TypeQueue; 
 
         public IEnumerator<E> GetEnumerator()
         {
-            return new PQEnumerator<E>(this);
+            foreach (var item in TypeQueue)
+            {
+                yield return item;
+            }
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
             return GetEnumerator();
         }
+
         public PriorityQueue()
         {
-            globalQueue = new Dictionary<PriorityType, List<E>>();
-
-            globalQueue.Add(PriorityType.Low, new List<E>());
-            globalQueue.Add(PriorityType.Medium, new List<E>());
-            globalQueue.Add(PriorityType.High, new List<E>());
+            GlobalQueue = new Dictionary<PriorityType, List<E>> 
+                  {
+                    { PriorityType.Low, new List<E>() },
+                    { PriorityType.Medium, new List<E>() },
+                    { PriorityType.High, new List<E>() }
+                 };
         }
 
         public void Put(E e, PriorityType p)
         {
             if (p == PriorityType.Low)
             {
-               var list =  globalQueue[PriorityType.Low];
+               var list =  GlobalQueue[PriorityType.Low];
                list.Add(e);
             }
             else if (p == PriorityType.Medium)
             {
-                var list = globalQueue[PriorityType.Medium];
+                var list = GlobalQueue[PriorityType.Medium];
                 list.Add(e);
             }
             else
             {
-                var list = globalQueue[PriorityType.High];
+                var list = GlobalQueue[PriorityType.High];
                 list.Add(e);
             }
         }
@@ -92,9 +63,9 @@ namespace PriorityQueue
         {
             E result = default(E);
 
-            var listWithHigh   = globalQueue[PriorityType.High];
-            var listWithMedium = globalQueue[PriorityType.Medium];
-            var listWithLow    = globalQueue[PriorityType.Low];
+            var listWithHigh   = GlobalQueue[PriorityType.High];
+            var listWithMedium = GlobalQueue[PriorityType.Medium];
+            var listWithLow    = GlobalQueue[PriorityType.Low];
 
             if (listWithHigh.Count > 0)
             {
@@ -121,7 +92,7 @@ namespace PriorityQueue
 
         public void Drop(PriorityType p)
         {
-           globalQueue.Remove(p); 
+           GlobalQueue.Remove(p); 
         }
 
 
