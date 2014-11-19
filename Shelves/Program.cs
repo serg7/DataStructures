@@ -24,7 +24,7 @@ namespace Shelves
                 Console.WriteLine(item);
             }
 
-            Console.WriteLine("Books from the 1 shelf: ");
+            Console.WriteLine("Books from the 1st shelf: ");
 
             IEnumerator it = c.GetEnumeratorForLevel(1);
 
