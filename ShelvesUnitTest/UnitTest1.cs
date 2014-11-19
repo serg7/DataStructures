@@ -1,16 +1,15 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Shelves;
 
-
-namespace Shelves
+namespace ShelvesUnitTest
 {
-    class Program
+    [TestClass]
+    public class UnitTest1
     {
-        static void Main(string[] args)
+        [TestMethod]
+        public void TestCommonIteration()
         {
-
             IShelves<string> c = new Shelves<string>();
 
             c.Add(1, "Jon Skeet, C# in depth");
@@ -24,16 +23,7 @@ namespace Shelves
                 Console.WriteLine(item);
             }
 
-            Console.WriteLine("Books from the 1 shelf: ");
 
-            IEnumerator it = c.GetEnumeratorForLevel(1);
-
-            while (it.MoveNext())
-            {
-                Console.WriteLine(it.Current.ToString());
-            }
-
-            Console.Read();
         }
     }
 }

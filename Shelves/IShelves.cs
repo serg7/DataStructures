@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Shelves
 {
-    interface IShelves<T> : IEnumerable<T>
+    public interface IShelves<T> : IEnumerable<T>
     {
         void Add(int level, T data);
-        IEnumerable<T> GetEnumeratorForLevel(int level);
+        IEnumerator<T> GetEnumeratorForLevel(int level);
     }
 }
