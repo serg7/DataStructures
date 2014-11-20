@@ -1,20 +1,14 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
 
 namespace PriorityQueue
 {
-    public enum PriorityType
+    public class PriorityQueue<E> : ICollection<E>
     {
-        Low = 1,
-        Medium,
-        High
-    }
-
-    public class PriorityQueue<E> : IEnumerable<E>
-    {
-        private Dictionary<PriorityType, List<E>> GlobalQueue;
+        private readonly SortedDictionary<int, List<E>> _globalQueue;
         private List<E> TypeQueue; 
 
         public IEnumerator<E> GetEnumerator()
@@ -32,69 +26,86 @@ namespace PriorityQueue
 
         public PriorityQueue()
         {
-            GlobalQueue = new Dictionary<PriorityType, List<E>> 
-                  {
-                    { PriorityType.Low, new List<E>() },
-                    { PriorityType.Medium, new List<E>() },
-                    { PriorityType.High, new List<E>() }
-                 };
+            _globalQueue = new SortedDictionary<int, List<E>>();
         }
 
-        public void Put(E e, PriorityType p)
+        public void Put(E e, int p)
         {
-            if (p == PriorityType.Low)
+            if (!_globalQueue.ContainsKey(p))
             {
-               var list =  GlobalQueue[PriorityType.Low];
-               list.Add(e);
-            }
-            else if (p == PriorityType.Medium)
-            {
-                var list = GlobalQueue[PriorityType.Medium];
-                list.Add(e);
+                _globalQueue.Add(p, new List<E>());
+                var shelf = _globalQueue[p];
+                shelf.Add(e);
             }
             else
             {
-                var list = GlobalQueue[PriorityType.High];
-                list.Add(e);
-            }
+                var shelf = _globalQueue[p];
+                shelf.Add(e);
+            }       
         }
 
         public E Get()
         {
             E result = default(E);
-
-            var listWithHigh   = GlobalQueue[PriorityType.High];
-            var listWithMedium = GlobalQueue[PriorityType.Medium];
-            var listWithLow    = GlobalQueue[PriorityType.Low];
-
-            if (listWithHigh.Count > 0)
+            int[] keys = _globalQueue.Keys.ToArray();
+            
+            foreach (var key in keys)
             {
-                result = listWithHigh.First();
-                listWithHigh.Remove(result);
-            }
-            else if (listWithMedium.Count > 0)
-            {
-                result = listWithMedium.First();
-                listWithMedium.Remove(result);
-            }
-            else if (listWithLow.Count > 0)
-            {
-                result = listWithLow.First();
-                listWithLow.Remove(result);
-            }
-            else
-            {
-                result = default(E);
+                if (_globalQueue[key].Count > 0)
+                {
+                     result = _globalQueue[key].First();
+                     _globalQueue[key].Remove(result);
+                }
             }
 
             return result;
         }
 
-        public void Drop(PriorityType p)
+        public void Drop(int p)
         {
-           GlobalQueue.Remove(p); 
+           _globalQueue.Remove(p); 
         }
 
 
+
+
+
+
+
+
+        public void Add(E item)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void Clear()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public bool Contains(E item)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void CopyTo(E[] array, int arrayIndex)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public int Count
+        {
+            get { throw new System.NotImplementedException(); }
+        }
+
+        public bool IsReadOnly
+        {
+            get { throw new System.NotImplementedException(); }
+        }
+
+        public bool Remove(E item)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

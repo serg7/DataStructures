@@ -6,7 +6,12 @@ namespace PriorityQueue
 {
 
     // ADD ANOTHER REALIZATION WITH yield return
-
+    public enum PriorityType
+    {
+        Low = 1,
+        Medium,
+        High
+    }
 
     public class PriorityQueue2<T> 
     {
